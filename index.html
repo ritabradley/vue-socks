@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vue Socks</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+
+    </head>
+
+    <body>
+        <div class="nav-bar"></div>
+        <div id="app">
+            <div class="product">
+                <div class="product-image">
+                    <img :src="image" :alt="description">
+                </div>
+                <div class="product-info">
+                    <h1>{{ product }}</h1>
+                    <p v-if='inStock'>In Stock</p>
+                    <p v-else>Out of Stock</p>
+
+                    <ul>
+                        <li v-for='item in details'>{{ item }}</li>
+                    </ul>
+                    <div v-for='variant in variants' :key="variant.variantId">
+                        <p>{{ variant.variantColor }}</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="main.js"></script>
+    </body>
+
+</html>
