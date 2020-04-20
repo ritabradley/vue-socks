@@ -14,7 +14,7 @@ Vue.component('product', {
         <h1>{{ title }}</h1>
         <p v-if='inStock'>In Stock</p>
         <p v-else>Out of Stock</p>
-        <p>User is premium: {{premium}}</p>
+        <p>Shipping: {{shipping}}</p>
 
         <ul class="list-group list-group-flush w-25">
             <li class="list-group-item" v-for='item in details'>{{ item }}</li>
@@ -23,9 +23,7 @@ Vue.component('product', {
             :key="variant.variantId" :style='{ backgroundColor: variant.variantColor}'>
         </div>
         <button @click="addToCart" :disabled="!inStock" :class='{disabledButton: !inStock}'>Add To Cart</button>
-        <div class="cart">
-            <p><i class="fas fa-cart-plus"></i> Cart({{cart}})</p>
-        </div>
+        
     </div>
 </div>
     `,
@@ -42,11 +40,11 @@ Vue.component('product', {
             {variantId: 2235, variantColor: 'blue',
             variantImage: 'img/blue-socks.jpg', variantQuantity: 0},
         ], 
-        cart: 0
+        
     }},
     methods: {
         addToCart() {
-            return this.cart++
+            this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId)
         },
         changeImage(index) {
             this.selectedVariant = index
@@ -62,6 +60,12 @@ Vue.component('product', {
 
         inStock() {
             return this.variants[this.selectedVariant].variantQuantity
+        },
+        shipping() {
+            if(this.premium){
+                return 'Free'
+            }
+            return `$2.99`
         }
     },
 }
@@ -70,6 +74,12 @@ Vue.component('product', {
 const app = new Vue({
     el: '#app',
     data: {
-        premium: true
-    }
+        premium: true,
+        cart: []
+    },
+    methods: {
+        updateCart(id) {
+            this.cart.push(id)
+        }
+    },
 })
